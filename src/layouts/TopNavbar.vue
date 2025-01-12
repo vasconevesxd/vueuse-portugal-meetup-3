@@ -28,7 +28,7 @@ onMounted(() => {
 <template>
   <nav class="navbar bg-base-100 shadow-md">
     <div class="flex-1">
-      <RouterLink to="/" class="btn btn-ghost normal-case text-xl">Shop</RouterLink>
+      <RouterLink to="/" class="btn btn-ghost normal-case text-xl">VueUse</RouterLink>
     </div>
     <div class="flex-none">
       <select v-model="colorMode" class="select select-bordered max-w-xs">

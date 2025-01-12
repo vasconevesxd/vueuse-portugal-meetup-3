@@ -13,6 +13,7 @@ const url = ref(`https://dummyjson.com/product/${route.params.id}`)
 // Fetch product data
 const { data, isFetching, error, execute } = useFetchData()
 execute(url.value)
+
 // Computed property for images
 const images = computed(() => data.value?.images || [])
 

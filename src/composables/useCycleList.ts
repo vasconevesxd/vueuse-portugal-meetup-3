@@ -1,6 +1,5 @@
 import { ref, watch } from 'vue'
 
-// Cycle list composable
 export const useCycleList = (list: any[]) => {
   const state = ref(list[0] || null)
   const index = ref(0)

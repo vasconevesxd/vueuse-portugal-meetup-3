@@ -1,6 +1,5 @@
 import { ref } from 'vue'
 
-// Fetch product data composable
 export const useConfirmDialog = () => {
   const isRevealed = ref(false)
   let resolvePromise: (value: boolean) => void

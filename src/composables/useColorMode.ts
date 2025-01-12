@@ -1,4 +1,3 @@
-// composables/useColorMode.ts
 import { ref, watch, onMounted } from 'vue'
 
 export const useColorMode = ({

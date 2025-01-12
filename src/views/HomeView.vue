@@ -11,9 +11,6 @@
         <div class="card-body p-6">
           <h2 class="card-title text-xl font-semibold text-gray-800">With VueUse</h2>
           <p class="text-gray-600 mt-2">Explore how VueUse simplifies common Vue.js patterns.</p>
-          <div class="card-actions justify-end mt-4">
-            <button class="btn btn-primary px-4 py-2 rounded-lg text-white">Go</button>
-          </div>
         </div>
       </router-link>
 
@@ -25,9 +22,6 @@
         <div class="card-body p-6">
           <h2 class="card-title text-xl font-semibold text-gray-800">Without VueUse</h2>
           <p class="text-gray-600 mt-2">See how tasks are managed without VueUse utilities.</p>
-          <div class="card-actions justify-end mt-4">
-            <button class="btn btn-primary px-4 py-2 rounded-lg text-white">Go</button>
-          </div>
         </div>
       </router-link>
     </div>

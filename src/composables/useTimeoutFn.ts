@@ -1,5 +1,3 @@
-// composables/useColorMode.ts
-
 import { onUnmounted, ref } from 'vue'
 
 export const useTimeoutFn = (callback: () => void, delay: number) => {

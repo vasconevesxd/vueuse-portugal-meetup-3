@@ -1,6 +1,5 @@
 import { ref } from 'vue'
 
-// Fetch product data composable
 export const useFetchData = () => {
   const data = ref(null)
   const isFetching = ref(false)

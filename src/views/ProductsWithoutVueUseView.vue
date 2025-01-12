@@ -14,6 +14,8 @@ const products = ref<Product[]>([]) // Reactive array to store products
 const searchQuery = ref('') // Reactive searchQuery for filtering products
 
 const { isFetching, error, data, execute } = useFetchData()
+// Initial fetch
+execute(baseUrl)
 
 // Watch the fetch data to update `products`
 watch(data, (fetchedData) => {
@@ -38,9 +40,6 @@ const getFilterProducts = async () => {
 
 // Watch `searchQuery` and refetch products when it changes
 watch(searchQuery, getFilterProducts)
-
-// Initial fetch
-execute(baseUrl)
 </script>
 
 <template>

@@ -1,11 +1,11 @@
-import { ref, watch, type Ref } from 'vue'
+import { ref, watch, type Ref, type ComputedRef } from 'vue'
 
-export const useDebounce = <T>(value: T, delay: number) => {
-  const debouncedValue = ref(value) as Ref<T>
+export const useDebounce = <T>(value: Ref<T> | ComputedRef<T>, delay: number) => {
+  const debouncedValue = ref<T>(value.value)
   let timeout: ReturnType<typeof setTimeout>
 
   watch(
-    () => value,
+    value,
     (newValue) => {
       clearTimeout(timeout)
       timeout = setTimeout(() => {
