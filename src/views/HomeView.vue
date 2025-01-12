@@ -4,18 +4,30 @@ import { useFetch } from '@vueuse/core'
 import AlertError from '@/components/AlertError.vue'
 import ProductList from '@/components/ProductList.vue'
 import Filter from '@/components/Filter.vue'
+import type { Product } from '@/types/Product'
 
 // Base URL for fetching products
 const baseUrl = 'https://dummyjson.com/products'
 const url = ref(baseUrl)
+const products = ref<Product[]>([]) // Reactive array to store products
+
 const searchQuery = ref('') // Reactive searchQuery for filtering products
 
 // Fetch products
 const { isFetching, error, data, execute } = useFetch(url, {
-  immediate: true, // Fetch on initialization
+  immediate: true,
 })
   .get()
   .json()
+
+// Watch the fetch data to update `products`
+watch(data, (fetchedData) => {
+  products.value = fetchedData?.products || []
+})
+
+const handleSearch = (query: string) => {
+  searchQuery.value = query
+}
 
 // Function to fetch filtered products
 const getFilterProducts = async () => {
@@ -31,37 +43,33 @@ const getFilterProducts = async () => {
 
 // Watch `searchQuery` and refetch products when it changes
 watch(searchQuery, getFilterProducts)
-
-const handleSearch = (query: string) => {
-  searchQuery.value = query
-}
 </script>
 
 <template>
   <main>
-    <div class="flex justify-end mb-4">
+    <div class="flex justify-end mb-4" v-if="products?.length">
       <Filter @update-search="handleSearch" />
     </div>
 
-    <!-- Show an error alert if there's an error -->
-    <div v-if="error">
-      <AlertError :error="error" />
-    </div>
-
-    <!-- Smooth transition between loading and results -->
+    <!-- Smooth transition  -->
     <transition name="fade" mode="out-in">
-      <!-- Show a loading spinner if data is being fetched -->
-      <div v-if="isFetching" key="loading" class="flex justify-center w-full h-full">
+      <!-- Show an error alert if there's an error -->
+      <div v-if="error" key="error">
+        <AlertError :error="error" />
+      </div>
+
+      <!-- Show a loading spinner if products is being fetched -->
+      <div v-else-if="isFetching" key="loading" class="flex justify-center w-full h-full">
         <span class="loading loading-spinner loading-lg"></span>
       </div>
 
-      <!-- Show the product list if data is available -->
+      <!-- Show the product list if products is available -->
       <div
-        v-else-if="data?.products?.length"
+        v-else-if="products?.length"
         key="results"
         class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
       >
-        <ProductList :products="data.products" />
+        <ProductList :products="products" />
       </div>
 
       <!-- Show a 'No products available' message if there are no products -->
