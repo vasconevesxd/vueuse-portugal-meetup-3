@@ -1,5 +1,3 @@
-<script setup lang="ts"></script>
-
 <template>
   <main class="flex justify-center items-start min-h-screen from-blue-50 via-white to-blue-100 p-6">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">

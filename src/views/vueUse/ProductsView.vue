@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
-import AlertError from '@/components/AlertError.vue'
-import ProductList from '@/components/ProductList.vue'
-import Filter from '@/components/Filter.vue'
+import { useFetch } from '@vueuse/core'
+import AlertError from '@/components/vueUse/AlertError.vue'
+import ProductList from '@/components/vueUse/ProductList.vue'
+import Filter from '@/components/vueUse/Filter.vue'
 import type { Product } from '@/types/Product'
-import { useFetchData } from '@/composables/useFetch'
 
 // Base URL for fetching products
 const baseUrl = 'https://dummyjson.com/products'
@@ -13,9 +13,12 @@ const products = ref<Product[]>([]) // Reactive array to store products
 
 const searchQuery = ref('') // Reactive searchQuery for filtering products
 
-const { isFetching, error, data, execute } = useFetchData()
-// Initial fetch
-execute(baseUrl)
+// Fetch products
+const { isFetching, error, data, execute } = useFetch(url, {
+  immediate: true,
+})
+  .get()
+  .json()
 
 // Watch the fetch data to update `products`
 watch(data, (fetchedData) => {
@@ -35,7 +38,7 @@ const getFilterProducts = async () => {
     // Reset to the default URL if searchQuery is empty
     url.value = baseUrl
   }
-  await execute(url.value) // Execute the fetch with the updated URL
+  await execute() // Execute the fetch with the updated URL
 }
 
 // Watch `searchQuery` and refetch products when it changes

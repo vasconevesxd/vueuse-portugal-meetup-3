@@ -11,22 +11,22 @@ const router = createRouter({
     {
       path: '/products',
       name: 'products',
-      component: () => import('@/views/ProductsView.vue'),
+      component: () => import('@/views/vueUse/ProductsView.vue'),
     },
     {
       path: '/product/:id',
       name: 'product',
-      component: () => import('@/views/ProductView.vue'),
+      component: () => import('@/views/vueUse/ProductView.vue'),
     },
     {
       path: '/productsWithoutVueUse',
       name: 'productsWithoutVueUse',
-      component: () => import('@/views/ProductsWithoutVueUseView.vue'),
+      component: () => import('@/views/withoutVueUse/ProductsWithoutVueUseView.vue'),
     },
     {
       path: '/productWithoutVueUse/:id',
       name: 'productWithoutVueUse',
-      component: () => import('@/views/ProductWithoutVueUseView.vue'),
+      component: () => import('@/views/withoutVueUse/ProductWithoutVueUseView.vue'),
     },
   ],
 })

@@ -2,7 +2,7 @@
 import { useRoute } from 'vue-router'
 import { useCycleList, useFetch } from '@vueuse/core'
 import { ref, computed } from 'vue'
-import AlertError from '@/components/AlertError.vue'
+import AlertError from '@/components/vueUse/AlertError.vue'
 
 const route = useRoute()
 

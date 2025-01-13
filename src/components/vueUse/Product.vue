@@ -19,7 +19,7 @@ const redirectToProduct = (id: number) => {
 
 <template>
   <div
-    class="card bg-base-100 w-96 shadow-xl cursor-pointer"
+    class="card bg-base-100 w-96 shadow-xl cursor-pointer transition-transform transform hover:scale-105"
     @click="redirectToProduct(product.id)"
   >
     <figure>

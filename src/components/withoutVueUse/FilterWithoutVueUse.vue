@@ -1,18 +1,16 @@
 <script lang="ts" setup>
+import { refDebounced } from '@/composables/refDebounced'
 import { ref, watch } from 'vue'
-import { useDebounce } from '@vueuse/core'
 
+// Props and emits
+const emit = defineEmits(['update-search'])
 const inputValue = ref('')
-
-const debouncedValue = useDebounce(inputValue, 300) // 300ms debounce
+const debouncedValue = refDebounced(inputValue, 300)
 
 // Emit the debounced value to the parent component
 watch(debouncedValue, (newValue) => {
   emit('update-search', newValue)
 })
-
-// Props and emits
-const emit = defineEmits(['update-search'])
 </script>
 
 <template>

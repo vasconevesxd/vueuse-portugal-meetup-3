@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
-import { useFetch } from '@vueuse/core'
-import AlertError from '@/components/AlertError.vue'
-import ProductList from '@/components/ProductList.vue'
-import Filter from '@/components/Filter.vue'
+import AlertErrorWithoutVueUse from '@/components/withoutVueUse/AlertErrorWithoutVueUse.vue'
+import ProductListWithoutVueUse from '@/components/withoutVueUse/ProductListWithoutVueUse.vue'
+import FilterWithoutVueUse from '@/components/withoutVueUse/FilterWithoutVueUse.vue'
 import type { Product } from '@/types/Product'
+import { useFetch } from '@/composables/useFetch'
 
 // Base URL for fetching products
 const baseUrl = 'https://dummyjson.com/products'
@@ -13,12 +13,9 @@ const products = ref<Product[]>([]) // Reactive array to store products
 
 const searchQuery = ref('') // Reactive searchQuery for filtering products
 
-// Fetch products
-const { isFetching, error, data, execute } = useFetch(url, {
-  immediate: true,
-})
-  .get()
-  .json()
+const { isFetching, error, data, execute } = useFetch()
+// Initial fetch
+execute(baseUrl)
 
 // Watch the fetch data to update `products`
 watch(data, (fetchedData) => {
@@ -38,7 +35,7 @@ const getFilterProducts = async () => {
     // Reset to the default URL if searchQuery is empty
     url.value = baseUrl
   }
-  await execute() // Execute the fetch with the updated URL
+  await execute(url.value) // Execute the fetch with the updated URL
 }
 
 // Watch `searchQuery` and refetch products when it changes
@@ -48,14 +45,14 @@ watch(searchQuery, getFilterProducts)
 <template>
   <main>
     <div class="flex justify-end mb-4">
-      <Filter @update-search="handleSearch" />
+      <FilterWithoutVueUse @update-search="handleSearch" />
     </div>
 
     <!-- Smooth transition  -->
     <transition name="fade" mode="out-in">
       <!-- Show an error alert if there's an error -->
       <div v-if="error" key="error">
-        <AlertError :error="error" />
+        <AlertErrorWithoutVueUse :error="error" />
       </div>
 
       <!-- Show a loading spinner if products is being fetched -->
@@ -69,7 +66,7 @@ watch(searchQuery, getFilterProducts)
         key="results"
         class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
       >
-        <ProductList :products="products" />
+        <ProductListWithoutVueUse :products="products" />
       </div>
 
       <!-- Show a 'No products available' message if there are no products -->

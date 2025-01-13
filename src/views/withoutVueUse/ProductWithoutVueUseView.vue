@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import { ref, computed } from 'vue'
 import { useRoute } from 'vue-router'
-import AlertError from '@/components/AlertError.vue'
-import { useFetchData } from '@/composables/useFetch'
+import AlertErrorWithoutVueUse from '@/components/withoutVueUse/AlertErrorWithoutVueUse.vue'
+import { useFetch } from '@/composables/useFetch'
 import { useCycleList } from '@/composables/useCycleList'
 
 const route = useRoute()
@@ -11,20 +11,19 @@ const route = useRoute()
 const url = ref(`https://dummyjson.com/product/${route.params.id}`)
 
 // Fetch product data
-const { data, isFetching, error, execute } = useFetchData()
+const { data, isFetching, error, execute } = useFetch()
 execute(url.value)
 
-// Computed property for images
 const images = computed(() => data.value?.images || [])
 
-// Initialize cycle list for images
-const { state, index: imageIndex, next, prev } = useCycleList(images.value)
+// Pass the reactive `images` to `useCycleList`
+const { state, index: imageIndex, next, prev } = useCycleList(images)
 </script>
 
 <template>
   <div>
     <div v-if="error">
-      <AlertError :error="error" />
+      <AlertErrorWithoutVueUse :error="error" />
     </div>
 
     <transition name="fade" mode="out-in">
