@@ -40,13 +40,14 @@ const { state, index: imageIndex, next, prev } = useCycleList(images)
         <!-- Product Image and Carousel -->
         <div class="flex flex-wrap lg:flex-nowrap gap-6">
           <div class="w-full lg:w-1/2">
-            <div class="carousel w-full" v-if="state">
-              <div class="carousel-item relative w-full">
+            <div class="carousel w-full">
+              <div class="relative w-full">
                 <transition>
                   <img
                     :src="typeof state === 'string' ? state : ''"
                     :key="imageIndex"
                     class="rounded-lg"
+                    v-if="state"
                   />
                 </transition>
                 <div
